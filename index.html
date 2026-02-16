@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kivo · partner onboarding · enterprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ========== YOUR EXACT DESIGN – NO VISUAL CHANGES ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fafafa;
+      color: #1e1e1e;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', 'Poppins', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* header */
+    .header {
+      width: 100%;
+      padding: 24px 60px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-box {
+      padding: 8px 20px 8px 16px;
+      border-radius: 40px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      height: 70px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      font-size: 0.7rem;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .brand-accent {
+      color: #1e1e1e;
+      font-weight: 500;
+    }
+
+    /* main */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    /* stepper */
+    .stepper {
+      width: 480px;
+      max-width: 90vw;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #b0b0b0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #fafafa;
+      padding: 0 6px;
+      transition: 0.25s ease;
+    }
+
+    .step.active {
+      color: #000;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .step.active::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #eaeaea;
+      z-index: 1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #1e1e1e;
+      transition: 0.3s cubic-bezier(0.3, 0, 0.2, 1);
+      border-radius: 4px;
+    }
+
+    /* card */
+    .lux-card {
+      width: 620px;
+      max-width: 90vw;
+      padding: 48px 48px 56px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.03);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lux-card::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, #f3f3f3 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .lux-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    h2 {
+      margin-bottom: 32px;
+      font-weight: 500;
+      font-size: 1.9rem;
+      letter-spacing: -0.02em;
+      color: #111;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 20px;
+    }
+
+    /* floating groups */
+    .floating-group {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .floating-group input,
+    .floating-group select {
+      width: 100%;
+      padding: 18px 18px 14px 18px;
+      border: 1.5px solid #eeeeef;
+      border-radius: 18px;
+      background: white;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: 0.2s;
+      color: #111;
+    }
+
+    .floating-group select {
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23888888" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      background-size: 14px;
+    }
+
+    .floating-group input:focus,
+    .floating-group select:focus {
+      border-color: #111;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .floating-group label {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      font-size: 0.9rem;
+      color: #8a8a8a;
+      font-weight: 400;
+      background: white;
+      padding: 0 8px;
+      transition: 0.2s ease-out;
+      pointer-events: none;
+      border-radius: 20px;
+    }
+
+    .floating-group input:focus + label,
+    .floating-group input:not(:placeholder-shown) + label,
+    .floating-group select:focus + label,
+    .floating-group select:not([value=""]):valid + label {
+      top: -11px;
+      left: 12px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #111;
+      background: white;
+    }
+
+    .floating-group input::placeholder,
+    .floating-group select:invalid {
+      color: transparent;
+    }
+
+    .input-hint {
+      text-align: right;
+      font-size: 0.7rem;
+      color: #aaa;
+      margin-top: -20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    /* button group */
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px 20px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: white;
+      border: 1px solid #111;
+      box-shadow: 0 8px 16px -8px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary:hover {
+      background: #2b2b2b;
+      border-color: #2b2b2b;
+      gap: 12px;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #2b2b2b;
+      border: 1.5px solid #e0e0e0;
+    }
+
+    .btn-secondary:hover {
+      border-color: #aaa;
+      background: #fcfcfc;
+      gap: 12px;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* footer */
+    .footer {
+      text-align: center;
+      padding: 24px 15px 20px;
+      font-size: 0.75rem;
+      color: #9a9a9a;
+      border-top: 1px solid #f0f0f0;
+      background: #ffffffd5;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.5px;
+    }
+
+    /* share card (appears after final step and on reload) */
+    .share-card {
+      background: #f8f9fc;
+      border-radius: 28px;
+      padding: 32px 28px;
+      margin: 25px 0 15px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+      text-align: center;
+    }
+
+    .gmeet-link-box {
+      background: white;
+      padding: 16px 20px;
+      border-radius: 60px;
+      border: 1px solid #eaeef5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0 10px;
+      font-family: 'Inter', monospace;
+      font-size: 1rem;
+    }
+
+    .gmeet-link-box span {
+      word-break: break-all;
+      color: #1a73e8;
+      font-weight: 500;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 40px;
+      transition: 0.2s;
+      color: #3c4043;
+    }
+
+    .icon-btn:hover {
+      background: #f1f3f4;
+    }
+
+    .whatsapp-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 15px 0 10px;
+      transition: 0.2s;
+      border: 1px solid #128C7E;
+    }
+
+    .whatsapp-share:hover {
+      background: #128C7E;
+      gap: 15px;
+    }
+
+    .polite-note {
+      background: #fff9e5;
+      border-left: 5px solid #f4b740;
+      padding: 18px 22px;
+      border-radius: 24px;
+      margin: 30px 0 10px;
+      text-align: left;
+      font-size: 0.95rem;
+      color: #2d2d2d;
+    }
+
+    .support-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .support-btn {
+      background: #111;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #111;
+      transition: 0.2s;
+    }
+
+    .support-btn:hover {
+      background: #2b2b2b;
+    }
+
+    .copy-feedback {
+      font-size: 0.8rem;
+      color: #34a853;
+      margin-left: 8px;
+    }
+
+    /* hide elements when completed */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-box">
+      <!-- YOUR LOGO – keep your exact file name -->
+      <img src="log2.png" alt="Kivo logo" class="logo-img" id="customLogo">
+    </div>
+    <div class="brand-text">
+      <span class="brand-accent">✦</span> PARTNER PROGRAM <span class="brand-accent">✦</span>
+    </div>
+  </div>
+</header>
+
+<section class="main">
+  <div class="stepper" id="stepperContainer">
+    <div class="progress-line"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="steps">
+      <div class="step active" id="s1">Institution</div>
+      <div class="step" id="s2">Contact</div>
+      <div class="step" id="s3">Schedule</div>
+      <div class="step" id="s4">Confirm</div>
+    </div>
+  </div>
+
+  <div class="lux-card" id="luxCard">
+    <div id="cardContent">
+      <!-- content dynamically replaced – your design stays intact -->
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2026 Kivo Research Lab <span style="color:#555;"></span>
+</footer>
+
+<script>
+  // ========== PRODUCTION CONFIGURATION ==========
+  // Google Forms configuration – extracted from your preview
+  const FORM_SUBMIT_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScjxwV-wFdLLJFOS8RIDS5B6WMU3T7tnQgvJAMq5p_XwW-kzQ/formResponse';
+  
+  // Field mapping – exactly as per your hidden inputs
+  const FIELD_MAP = {
+    institution: 'entry.825768095',
+    role: 'entry.788491704',
+    instType: 'entry.1022869685',
+    firstName: 'entry.349816699',
+    lastName: 'entry.625615859',
+    email: 'entry.976142113',
+    phone: 'entry.1595609336',
+    gmeetDate: 'entry.269295339',
+    gmeetTime: 'entry.1758167187',
+    comments: 'entry.366817936'
+  };
+
+  // PROFESSIONAL CONTACT DETAILS – UPDATED
+  const SUPPORT_EMAIL = 'akshaysivamofficial@gmail.com';
+  const SUPPORT_PHONE = '+917736190159';  // Updated phone number
+  const CUSTOM_MEET_LINK = 'https://meet.google.com/cra-kpxo-exw';
+
+  // ========== STATE MANAGEMENT ==========
+  let step = 1;
+  const totalSteps = 4;
+  let onboardingCompleted = false;
+
+  // DOM elements
+  const s1 = document.getElementById('s1');
+  const s2 = document.getElementById('s2');
+  const s3 = document.getElementById('s3');
+  const s4 = document.getElementById('s4');
+  const progressFill = document.getElementById('progressFill');
+  const stepperContainer = document.getElementById('stepperContainer');
+  const cardContent = document.getElementById('cardContent');
+
+  // Your data object
+  let formData = {
+    institution: '',
+    role: '',
+    instType: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    gmeetDate: '',
+    gmeetTime: '',
+    comments: ''
+  };
+
+  // ========== HELPER FUNCTIONS ==========
+  function setCompleted() {
+    onboardingCompleted = true;
+    sessionStorage.setItem('kivoOnboardingDone', 'true');
+  }
+
+  function checkCompleted() {
+    return sessionStorage.getItem('kivoOnboardingDone') === 'true';
+  }
+
+  // ========== SUBMIT TO GOOGLE FORM ==========
+  function submitToGoogleForm() {
+    // Create hidden iframe to avoid page navigation
+    const iframe = document.createElement('iframe');
+    iframe.name = 'gform_iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = FORM_SUBMIT_URL;
+    form.target = 'gform_iframe';
+    form.style.display = 'none';
+
+    // Add all form fields with your data
+    Object.keys(FIELD_MAP).forEach(key => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = FIELD_MAP[key];
+      input.value = formData[key] || '';
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Cleanup after submission
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+    }, 4000);
+  }
+
+  // ========== RENDER FINAL CARD – PROFESSIONAL VERSION ==========
+  function renderFinalCard() {
+    stepperContainer.classList.add('hidden');
+
+    const instDisplay = formData.institution || 'your institution';
+    const dateDisplay = formData.gmeetDate || 'selected date';
+    const timeDisplay = formData.gmeetTime || 'selected time';
+
+    const whatsappMessage = encodeURIComponent(`🤝 Kivo partnership meeting · ${instDisplay} · ${dateDisplay} at ${timeDisplay}\nGoogle Meet: ${CUSTOM_MEET_LINK}\n\nLooking forward to connecting!`);
+    const whatsappUrl = `https://wa.me/?text=${whatsappMessage}`;
+
+    // PROFESSIONAL FINAL CARD CONTENT
+    const finalHtml = `
+      <h2 style="border-bottom: none; text-align: center;">✅ Onboarding Complete</h2>
+      <div class="share-card" style="margin-top:0;">
+        <i class="fas fa-check-circle" style="font-size:3rem; color:#2e7d32; margin-bottom:15px;"></i>
+        <h3 style="font-weight:400; margin-bottom:20px;">Your Google Meeting Link</h3>
+        
+        <div class="gmeet-link-box">
+          <span id="meetLinkSpan">${CUSTOM_MEET_LINK}</span>
+          <button class="icon-btn" onclick="copyMeetLink()" title="Copy link"><i class="far fa-copy"></i></button>
+        </div>
+        <div id="copyFeedback" style="min-height:24px;"></div>
+
+        <a href="${whatsappUrl}" target="_blank" class="whatsapp-share">
+          <i class="fab fa-whatsapp" style="font-size:1.5rem;"></i> Share via WhatsApp
+        </a>
+
+        <div class="polite-note" style="background: #f0f4f8; border-left: 5px solid #1e1e1e;">
+          <i class="fas fa-info-circle" style="margin-right:10px; color:#1e1e1e;"></i>
+          <strong>Information Saved</strong> — Your details have been securely recorded. A confirmation will be sent to your email within 24 hours. For immediate assistance, please use the contact options below.
+        </div>
+
+        <div style="margin:20px 0 10px;">
+          <p style="font-size:0.95rem; color:#333;"><i class="fas fa-star" style="color:#f4b740;"></i> <strong>Need to reschedule or have questions?</strong> Our partnership team is ready to help.</p>
+        </div>
+
+        <div class="support-row">
+          <a href="mailto:${SUPPORT_EMAIL}?subject=Partnership%20Meeting%20Inquiry&body=Regarding%20my%20upcoming%20meeting%20on%20${dateDisplay}%20at%20${timeDisplay}" class="support-btn"><i class="far fa-envelope"></i> Email Partner Support</a>
+          <a href="tel:${SUPPORT_PHONE}" class="support-btn" style="background:white; color:#111; border:1.5px solid #ddd;"><i class="fas fa-phone-alt"></i> Call ${SUPPORT_PHONE}</a>
+        </div>
+        <p style="font-size:0.8rem; margin-top:15px; color:#777;"><i class="fas fa-clock"></i> Response within 24 business hours</p>
+        <p style="font-size:0.7rem; margin-top:20px; color:#aaa;">Reference: ${instDisplay} / ${dateDisplay}</p>
+      </div>
+    `;
+    cardContent.innerHTML = finalHtml;
+  }
+
+  // ========== RENDER STEP ==========
+  function renderStep(stepNumber) {
+    if (onboardingCompleted) {
+      renderFinalCard();
+      return;
+    }
+
+    stepperContainer.classList.remove('hidden');
+
+    [s1, s2, s3, s4].forEach((el, idx) => {
+      if (idx + 1 === stepNumber) el.classList.add('active');
+      else el.classList.remove('active');
+    });
+
+    const progressPercent = (stepNumber - 1) * (100 / (totalSteps - 1));
+    progressFill.style.width = progressPercent + '%';
+
+    let title = '', fieldsHtml = '';
+
+    // YOUR EXACT FIELD HTML – unchanged
+    if (stepNumber === 1) {
+      title = '🏛️ Institution details';
+      fieldsHtml = `
+        <div class="floating-group"><input type="text" id="instName" placeholder="institution name" required value="${formData.institution.replace(/"/g, '&quot;')}"><label for="instName">Institution name</label></div>
+        <div class="floating-group"><input type="text" id="role" placeholder="your role" required value="${formData.role.replace(/"/g, '&quot;')}"><label for="role">Your role</label></div>
+        <div class="floating-group"><select id="instType" required><option value="" disabled ${!formData.instType ? 'selected' : ''}></option><option value="university" ${formData.instType==='university'?'selected':''}>University / Higher Ed</option><option value="college" ${formData.instType==='college'?'selected':''}>College / Sixth form</option><option value="corporate" ${formData.instType==='corporate'?'selected':''}>Corporate academy</option><option value="nonprofit" ${formData.instType==='nonprofit'?'selected':''}>Nonprofit / NGO</option></select><label for="instType">Institution type</label></div>
+        <div class="input-hint"><i class="far fa-building"></i> official details</div>
+      `;
+    } else if (stepNumber === 2) {
+      title = '📇 Contact person';
+      fieldsHtml = `
+        <div class="floating-group"><input type="text" id="firstName" placeholder="first name" required value="${formData.firstName.replace(/"/g, '&quot;')}"><label for="firstName">First name</label></div>
+        <div class="floating-group"><input type="text" id="lastName" placeholder="last name" required value="${formData.lastName.replace(/"/g, '&quot;')}"><label for="lastName">Last name</label></div>
+        <div class="floating-group"><input type="email" id="email" placeholder="email" required value="${formData.email.replace(/"/g, '&quot;')}"><label for="email">Email address</label></div>
+        <div class="floating-group"><input type="tel" id="phone" placeholder="phone" required value="${formData.phone.replace(/"/g, '&quot;')}"><label for="phone">Phone (with country code)</label></div>
+        <div class="input-hint"><i class="far fa-envelope"></i> primary contact</div>
+      `;
+    } else if (stepNumber === 3) {
+      title = '📅 Schedule Google Meet';
+      fieldsHtml = `
+        <div class="floating-group"><input type="date" id="gmeetDate" placeholder="select date" required value="${formData.gmeetDate}"><label for="gmeetDate">Preferred date</label></div>
+        <div class="floating-group"><input type="time" id="gmeetTime" placeholder="select time" required value="${formData.gmeetTime}"><label for="gmeetTime">Preferred time</label></div>
+        <div class="floating-group"><input type="text" id="comments" placeholder="additional notes (optional)" value="${formData.comments.replace(/"/g, '&quot;')}"><label for="comments">Notes / topics</label></div>
+        <div class="input-hint"><i class="fas fa-video"></i> your custom meeting link is fixed</div>
+      `;
+    } else if (stepNumber === 4) {
+      title = '✅ Review details';
+      fieldsHtml = `
+        <div style="background:#f8f8f8; border-radius:24px; padding:24px; margin-bottom:20px;">
+          <p><strong>Institution:</strong> ${formData.institution || '(not set)'}</p>
+          <p><strong>Role:</strong> ${formData.role || ''}</p>
+          <p><strong>Institution type:</strong> ${formData.instType || ''}</p>
+          <p><strong>Contact:</strong> ${formData.firstName || ''} ${formData.lastName || ''} (${formData.email || ''})</p>
+          <p><strong>Phone:</strong> ${formData.phone || ''}</p>
+          <p><strong>Meeting:</strong> ${formData.gmeetDate || ''} at ${formData.gmeetTime || ''}</p>
+          <p><strong>Fixed link:</strong> ${CUSTOM_MEET_LINK}</p>
+          ${formData.comments ? '<p><strong>Notes:</strong> '+formData.comments+'</p>' : ''}
+        </div>
+        <p style="text-align:center;">Click 'Finish & share' to submit the form and get your meeting link.</p>
+      `;
+    }
+
+    const formHtml = `
+      <h2>${title}</h2>
+      <form id="mainForm" onsubmit="return false;">
+        ${fieldsHtml}
+        <div class="button-group">
+          <button type="button" class="btn btn-secondary" id="backBtn" onclick="prevStep()">
+            <i class="fas fa-arrow-left"></i> <span>Back</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+            <span id="nextBtnText">${stepNumber === totalSteps ? 'Finish & share' : 'Continue'}</span> <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    `;
+    cardContent.innerHTML = formHtml;
+
+    // Back button disable on step 1
+    if (stepNumber === 1) {
+      document.getElementById('backBtn')?.setAttribute('disabled', 'disabled');
+    } else {
+      document.getElementById('backBtn')?.removeAttribute('disabled');
+    }
+  }
+
+  // ========== COPY LINK FUNCTION ==========
+  window.copyMeetLink = function() {
+    const span = document.getElementById('meetLinkSpan');
+    if (!span) return;
+    const text = span.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const feedback = document.getElementById('copyFeedback');
+      if (feedback) {
+        feedback.innerHTML = '<span class="copy-feedback"><i class="fas fa-check-circle"></i> Link copied to clipboard!</span>';
+        setTimeout(() => feedback.innerHTML = '', 2500);
+      }
+    }).catch(() => alert('Press Ctrl+C to copy'));
+  };
+
+  // ========== UPDATE DATA FROM FIELDS ==========
+  function updateFormDataFromCurrentStep() {
+    if (step === 1) {
+      formData.institution = document.getElementById('instName')?.value || '';
+      formData.role = document.getElementById('role')?.value || '';
+      formData.instType = document.getElementById('instType')?.value || '';
+    } else if (step === 2) {
+      formData.firstName = document.getElementById('firstName')?.value || '';
+      formData.lastName = document.getElementById('lastName')?.value || '';
+      formData.email = document.getElementById('email')?.value || '';
+      formData.phone = document.getElementById('phone')?.value || '';
+    } else if (step === 3) {
+      formData.gmeetDate = document.getElementById('gmeetDate')?.value || '';
+      formData.gmeetTime = document.getElementById('gmeetTime')?.value || '';
+      formData.comments = document.getElementById('comments')?.value || '';
+    }
+  }
+
+  // ========== NAVIGATION ==========
+  window.nextStep = function() {
+    if (onboardingCompleted) return;
+
+    updateFormDataFromCurrentStep();
+
+    // Validation
+    if (step === 1) {
+      if (!formData.institution || !formData.role || !formData.instType) {
+        alert('Please fill all institution details before continuing.');
+        return;
+      }
+    } else if (step === 2) {
+      if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
+        alert('Please fill all contact details before continuing.');
+        return;
+      }
+    } else if (step === 3) {
+      if (!formData.gmeetDate || !formData.gmeetTime) {
+        alert('Please select a date and time for the meeting.');
+        return;
+      }
+    }
+
+    if (step < totalSteps) {
+      step++;
+      renderStep(step);
+    } else {
+      // FINAL STEP: Submit to Google Form
+      submitToGoogleForm();
+      setCompleted();
+      onboardingCompleted = true;
+      renderFinalCard();
+    }
+  };
+
+  window.prevStep = function() {
+    if (onboardingCompleted || step === 1) return;
+    updateFormDataFromCurrentStep();
+    step--;
+    renderStep(step);
+  };
+
+  // ========== INITIALISE ==========
+  if (checkCompleted()) {
+    onboardingCompleted = true;
+    renderFinalCard();
+  } else {
+    renderStep(1);
+  }
+</script>
+</body>
+</html>
